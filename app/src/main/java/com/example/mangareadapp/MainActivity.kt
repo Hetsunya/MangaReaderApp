@@ -1,5 +1,6 @@
 package com.example.mangareadapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -14,8 +15,6 @@ import com.example.mangareadapp.network.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.content.Intent
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,9 +46,9 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<MangaResponse>, response: Response<MangaResponse>) {
                 if (response.isSuccessful) {
                     val mangas = response.body()?.foundMangas ?: emptyList()
-                    Log.d("MainZalupa", "Displaying mangas: $mangas")
+                    Log.d("MainActivity", "Displaying mangas: $mangas")
                     for (manga in mangas) {
-                        Log.d("Mainzalupa", "Manga: url=${manga.url}, title=${manga.title}, imageUrl=${manga.imageUrl}")
+                        Log.d("MainActivity", "Manga: url=${manga.url}, title=${manga.title}, imageUrl=${manga.imageUrl}")
                     }
                     val intent = Intent(this@MainActivity, SearchResultsActivity::class.java)
                     intent.putParcelableArrayListExtra("mangas", ArrayList(mangas))
@@ -59,22 +58,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-
             override fun onFailure(call: Call<MangaResponse>, t: Throwable) {
                 displayError("Failure: ${t.message}")
             }
         })
-    }
-
-
-
-    private fun displayMangas(mangas: List<Manga>) {
-        resultLayout.removeAllViews()
-        for (manga in mangas) {
-            val textView = TextView(this)
-            textView.text = manga.title
-            resultLayout.addView(textView)
-        }
     }
 
     private fun displayError(message: String) {

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 data class Manga(
     @SerializedName("url") val url: String,
     @SerializedName("title") val title: String,
-    @SerializedName("image_url") val imageUrl: String // Обратите внимание на соответствие
+    @SerializedName("image_url") val imageUrl: String
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",

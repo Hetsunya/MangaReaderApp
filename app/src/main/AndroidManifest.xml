@@ -25,6 +25,8 @@
         </activity>
 
         <activity android:name=".SearchResultsActivity"></activity>
-    </application>
+        <activity android:name=".MangaDetailActivity"></activity>
+        <activity android:name=".ChapterListActivity" />
 
+    </application>
 </manifest>

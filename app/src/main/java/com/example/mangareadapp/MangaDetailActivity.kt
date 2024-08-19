@@ -4,26 +4,27 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mangareadapp.api.Manga
 import com.squareup.picasso.Picasso
 
-class MangaDetailsActivity : AppCompatActivity() {
+class MangaDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_manga_details)
+        setContentView(R.layout.activity_manga_detail)
 
-        // Получаем ссылки на элементы интерфейса
-        val imageViewManga: ImageView = findViewById(R.id.imageViewManga)
-        val textViewMangaTitle: TextView = findViewById(R.id.textViewMangaTitle)
+        // Получаем данные из Intent
+        val title = intent.getStringExtra("title")
+        val imageUrl = intent.getStringExtra("imageUrl")
+        val url = intent.getStringExtra("url")
 
-        // Получаем данные манги из интента
-        val manga = intent.getParcelableExtra<Manga>("manga")
+        // Настраиваем виджеты
+        val imageView = findViewById<ImageView>(R.id.imageView)
+        val titleView = findViewById<TextView>(R.id.titleView)
+        val urlView = findViewById<TextView>(R.id.urlView)
 
-        // Отображаем данные, если манга не null
-        manga?.let {
-            textViewMangaTitle.text = it.title
-            Picasso.get().load(it.imageUrl).into(imageViewManga)
-        }
+        // Устанавливаем данные
+        titleView.text = title
+        urlView.text = url
+        Picasso.get().load(imageUrl).into(imageView)
     }
 }
