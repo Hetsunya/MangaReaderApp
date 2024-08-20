@@ -41,6 +41,7 @@ class MangaAdapter(private val mangas: List<Manga>) : RecyclerView.Adapter<Manga
                     putExtra("title", manga.title)
                     putExtra("imageUrl", manga.imageUrl)
                     putExtra("url", manga.url)
+                    putExtra("manga", manga)
                 }
                 context.startActivity(intent)
             }

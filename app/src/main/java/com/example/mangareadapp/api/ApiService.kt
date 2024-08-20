@@ -11,7 +11,7 @@ interface ApiService {
 
     @GET("mangaDetails")
     suspend fun getMangaDetails(@Query("url") url: String): Manga
-
+    
     @GET("/scrap/chapters")
-    fun getChapters(@Query("url") mangaUrl: String): Call<List<Chapter>>
+    fun getChapters(@Query("url") url: String): Call<List<Chapter>>
 }
