@@ -29,6 +29,7 @@ class MangaDetailActivity : AppCompatActivity() {
         val descriptionView = findViewById<TextView>(R.id.descriptionView)
         val statusView = findViewById<TextView>(R.id.statusView)
         val yearView = findViewById<TextView>(R.id.yearView)
+        val numberOfChaptersView = findViewById<TextView>(R.id.numberOfChaptersView)
         val chaptersButton = findViewById<Button>(R.id.chaptersButton)
         val chaptersList = findViewById<LinearLayout>(R.id.chaptersList)
 
@@ -36,7 +37,7 @@ class MangaDetailActivity : AppCompatActivity() {
         val mangaUrl = intent.getStringExtra("manga_url") ?: ""
 
         // Запрашиваем детализированную информацию о манге
-        fetchMangaDetails(mangaUrl, imageView, titleView, genreView, descriptionView, statusView, yearView)
+        fetchMangaDetails(mangaUrl, imageView, titleView, genreView, descriptionView, statusView, yearView, numberOfChaptersView)
 
 //        // Обработчик нажатия на кнопку "View Chapters"
 //        chaptersButton.setOnClickListener {
@@ -44,7 +45,9 @@ class MangaDetailActivity : AppCompatActivity() {
 //        }
     }
 
-    private fun fetchMangaDetails(mangaUrl: String, imageView: ImageView, titleView: TextView, genreView: TextView, descriptionView: TextView, statusView: TextView, yearView: TextView) {
+    private fun fetchMangaDetails(mangaUrl: String, imageView: ImageView, titleView: TextView,
+                                  genreView: TextView, descriptionView: TextView, statusView: TextView,
+                                  yearView: TextView, numberOfChaptersView: TextView) {
         val apiService = RetrofitInstance.apiService
         val call = apiService.getMangaDetails(mangaUrl)
 
@@ -59,6 +62,7 @@ class MangaDetailActivity : AppCompatActivity() {
                         genreView.text = mangaDetail.genres.joinToString(separator = ", ")
                         statusView.text = mangaDetail.status
                         yearView.text = mangaDetail.year
+                        numberOfChaptersView.text = mangaDetail.numberOfChapters
                         descriptionView.text = mangaDetail.description
                     }
                 }
@@ -70,7 +74,7 @@ class MangaDetailActivity : AppCompatActivity() {
             }
         })
     }
-
+// ПРИДУМАТЬ ЧТО ДЕЛАТЬ С ЧИТАЛКОЙ
 //    private fun fetchChapters(mangaUrl: String, chaptersList: LinearLayout) {
 //        val apiService = RetrofitInstance.apiService
 //        val call = apiService.getChapters(mangaUrl)
@@ -85,18 +89,18 @@ class MangaDetailActivity : AppCompatActivity() {
 //
 //        })
 //    }
-
-    private fun displayChapters(chapters: List<Chapter>, chaptersList: LinearLayout) {
-        chaptersList.removeAllViews()
-        for (chapter in chapters) {
-            val button = Button(this)
-            button.text = "${chapter.title} - ${chapter.date}"
-            button.setOnClickListener {
-                // Заглушка для обработки нажатия
-                Toast.makeText(this, "Clicked on ${chapter.title}", Toast.LENGTH_SHORT).show()
-            }
-            chaptersList.addView(button)
-        }
-    }
+//
+//    private fun displayChapters(chapters: List<Chapter>, chaptersList: LinearLayout) {
+//        chaptersList.removeAllViews()
+//        for (chapter in chapters) {
+//            val button = Button(this)
+//            button.text = "${chapter.title} - ${chapter.date}"
+//            button.setOnClickListener {
+//                // Заглушка для обработки нажатия
+//                Toast.makeText(this, "Clicked on ${chapter.title}", Toast.LENGTH_SHORT).show()
+//            }
+//            chaptersList.addView(button)
+//        }
+//    }
 }
 
