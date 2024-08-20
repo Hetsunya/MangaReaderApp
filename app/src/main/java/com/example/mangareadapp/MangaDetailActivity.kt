@@ -27,6 +27,8 @@ class MangaDetailActivity : AppCompatActivity() {
         val titleView = findViewById<TextView>(R.id.titleView)
         val genreView = findViewById<TextView>(R.id.genreView)
         val descriptionView = findViewById<TextView>(R.id.descriptionView)
+        val statusView = findViewById<TextView>(R.id.statusView)
+        val yearView = findViewById<TextView>(R.id.yearView)
         val chaptersButton = findViewById<Button>(R.id.chaptersButton)
         val chaptersList = findViewById<LinearLayout>(R.id.chaptersList)
 
@@ -34,7 +36,7 @@ class MangaDetailActivity : AppCompatActivity() {
         val mangaUrl = intent.getStringExtra("manga_url") ?: ""
 
         // Запрашиваем детализированную информацию о манге
-        fetchMangaDetails(mangaUrl, imageView, titleView, genreView, descriptionView)
+        fetchMangaDetails(mangaUrl, imageView, titleView, genreView, descriptionView, statusView, yearView)
 
 //        // Обработчик нажатия на кнопку "View Chapters"
 //        chaptersButton.setOnClickListener {
@@ -42,7 +44,7 @@ class MangaDetailActivity : AppCompatActivity() {
 //        }
     }
 
-    private fun fetchMangaDetails(mangaUrl: String, imageView: ImageView, titleView: TextView, genreView: TextView, descriptionView: TextView) {
+    private fun fetchMangaDetails(mangaUrl: String, imageView: ImageView, titleView: TextView, genreView: TextView, descriptionView: TextView, statusView: TextView, yearView: TextView) {
         val apiService = RetrofitInstance.apiService
         val call = apiService.getMangaDetails(mangaUrl)
 
@@ -55,6 +57,8 @@ class MangaDetailActivity : AppCompatActivity() {
                         Picasso.get().load(mangaDetail.imageUrl).into(imageView)
                         titleView.text = mangaDetail.titles[0]
                         genreView.text = mangaDetail.genres.joinToString(separator = ", ")
+                        statusView.text = mangaDetail.status
+                        yearView.text = mangaDetail.year
                         descriptionView.text = mangaDetail.description
                     }
                 }
