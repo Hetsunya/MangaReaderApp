@@ -9,9 +9,9 @@ interface ApiService {
     @GET("/search")
     fun searchManga(@Query("q") query: String): Call<MangaResponse>
 
-    @GET("mangaDetails")
-    suspend fun getMangaDetails(@Query("url") url: String): Manga
-    
+    @GET("scrap")
+    fun getMangaDetails(@Query("url") mangaUrl: String): Call<MangaDetailResponse>
+
     @GET("/scrap/chapters")
     fun getChapters(@Query("url") url: String): Call<List<Chapter>>
 }

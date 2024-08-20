@@ -1,12 +1,16 @@
 package com.example.mangareadapp
 
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
 import com.example.mangareadapp.api.Chapter
-import com.example.mangareadapp.api.Manga
+import com.example.mangareadapp.api.MangaResponse
+import com.example.mangareadapp.api.MangaDetailResponse
 import android.widget.Button
 import android.widget.LinearLayout
 import com.example.mangareadapp.network.RetrofitInstance
@@ -26,30 +30,44 @@ class MangaDetailActivity : AppCompatActivity() {
         val chaptersButton = findViewById<Button>(R.id.chaptersButton)
         val chaptersList = findViewById<LinearLayout>(R.id.chaptersList)
 
-        // Получение данных из интента
-        val manga = intent.getParcelableExtra<Manga>("manga")
-        val genres = intent.getStringExtra("genres").toString() ?: ""
-        val description = intent.getStringExtra("description").toString() ?: ""
+        // Получаем url манги из интента
+        val mangaUrl = intent.getStringExtra("manga_url") ?: ""
 
-        // Установка данных в UI
-        Picasso.get().load(manga?.imageUrl).into(imageView)
-        titleView.text = manga?.title
-        genreView.text = genres
-        descriptionView.text = description
-        Log.d("MangaDetailActivity", "Manga imageUrl: ${manga?.imageUrl}")
-        Log.d("MangaDetailActivity", "Manga title: ${manga?.title}")
-        Log.d("MangaDetailActivity", "Genres: $genres")
-        Log.d("MangaDetailActivity", "Description: $description")
+        // Запрашиваем детализированную информацию о манге
+        fetchMangaDetails(mangaUrl, imageView, titleView, genreView, descriptionView)
 
-        // Обработчик нажатия на кнопку "View Chapters"
+//        // Обработчик нажатия на кнопку "View Chapters"
 //        chaptersButton.setOnClickListener {
-//            fetchChapters(manga?.url ?: "", chaptersList)
+//            fetchChapters(mangaUrl, chaptersList)
 //        }
     }
 
-//    ПОТОМ ДЕЛАТЬ НАДА ЫЫЫЫЫЫЫЫЫЫЫЫ
+    private fun fetchMangaDetails(mangaUrl: String, imageView: ImageView, titleView: TextView, genreView: TextView, descriptionView: TextView) {
+        val apiService = RetrofitInstance.apiService
+        val call = apiService.getMangaDetails(mangaUrl)
+
+        call.enqueue(object : Callback<MangaDetailResponse> {
+            override fun onResponse(call: Call<MangaDetailResponse>, response: Response<MangaDetailResponse>) {
+                if (response.isSuccessful) {
+                    val mangaDetail = response.body()
+                    if (mangaDetail != null) {
+                        // Отображаем данные
+                        Picasso.get().load(mangaDetail.imageUrl).into(imageView)
+                        titleView.text = mangaDetail.titles[0]
+                        genreView.text = mangaDetail.genres.joinToString(separator = ", ")
+                        descriptionView.text = mangaDetail.description
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<MangaDetailResponse>, t: Throwable) {
+                // Обработка ошибки
+                Toast.makeText(this@MangaDetailActivity, "Ошибка загрузки данных", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
 //    private fun fetchChapters(mangaUrl: String, chaptersList: LinearLayout) {
-//        // Здесь делается запрос для получения списка глав
 //        val apiService = RetrofitInstance.apiService
 //        val call = apiService.getChapters(mangaUrl)
 //
@@ -61,9 +79,6 @@ class MangaDetailActivity : AppCompatActivity() {
 //                }
 //            }
 //
-//            override fun onFailure(call: Call<List<Chapter>>, t: Throwable) {
-//                // Обработка ошибки
-//            }
 //        })
 //    }
 
@@ -80,3 +95,4 @@ class MangaDetailActivity : AppCompatActivity() {
         }
     }
 }
+
