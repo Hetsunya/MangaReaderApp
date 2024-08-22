@@ -1,3 +1,4 @@
+<!-- res/layout/activity_manga_reader.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,4 +17,41 @@
         android:layout_marginBottom="16dp"
         android:textSize="18sp"
         android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_settings"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/settingsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:background="#80000000"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/verticalScrollButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vertical Scroll" />
+
+        <Button
+            android:id="@+id/horizontalScrollButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horizontal Scroll" />
+    </LinearLayout>
+
+    <!-- Область для касаний -->
+    <View
+        android:id="@+id/touchArea"
+        android:layout_width="252dp"
+        android:layout_height="572dp"
+        android:background="@android:color/transparent" />
 </RelativeLayout>
