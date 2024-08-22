@@ -13,5 +13,5 @@ interface ApiService {
     fun getMangaDetails(@Query("url") mangaUrl: String): Call<MangaDetailResponse>
 
     @GET("/scrap/chapters")
-    fun getChapters(@Query("url") url: String): Call<List<Chapter>>
+    fun getChapters(@Query("url") url : String): Call<List<Chapter>>
 }
