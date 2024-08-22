@@ -15,10 +15,18 @@ import android.widget.LinearLayout
 import com.example.mangareadapp.network.RetrofitInstance
 import android.widget.Toast
 import android.net.Uri
+import android.util.Log
 import com.example.mangareadapp.R
+import com.example.mangareadapp.network.UrlChecker
+import okhttp3.OkHttpClient
+
+import com.example.mangareadapp.network.ApiService
 
 
 class MangaDetailActivity : AppCompatActivity() {
+
+    private lateinit var apiService: ApiService
+    private lateinit var urlChecker: UrlChecker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +44,20 @@ class MangaDetailActivity : AppCompatActivity() {
 
         val mangaUrl = intent.getStringExtra("manga_url") ?: ""
 
-        fetchMangaDetails(mangaUrl, imageView, titleView, genreView, descriptionView, statusView, yearView, numberOfChaptersView)
+        // Инициализация RetrofitInstance и UrlChecker
+        val apiService = RetrofitInstance.apiService
+        val urlChecker = UrlChecker(OkHttpClient())
+        Log.d("finalManga", mangaUrl)
+        // Проверка и получение правильного URL перед запросом
+        urlChecker.checkAndGetFinalUrl(mangaUrl) { finalUrl ->
+            Log.d("finalManga", finalUrl)
+            // Загрузка деталей манги
+            fetchMangaDetails(finalUrl, imageView, titleView, genreView, descriptionView, statusView, yearView, numberOfChaptersView)
 
-        // Обработчик нажатия на кнопку "View Chapters"
-        chaptersButton.setOnClickListener {
-            fetchChapters(mangaUrl, chaptersList)
+            // Обработчик нажатия на кнопку "View Chapters"
+            chaptersButton.setOnClickListener {
+                fetchChapters(finalUrl, chaptersList)
+            }
         }
     }
 

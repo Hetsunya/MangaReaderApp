@@ -15,6 +15,7 @@ import com.example.mangareadapp.network.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 //TODO: ЯОЙ ПО ДРУГОЙ ССЫЛКЕ (ТАМ https://m2.yaoipoisk.net) НУЖНО ЧТО ТО СДЕЛАТЬ
 class MainActivity : AppCompatActivity() {
 

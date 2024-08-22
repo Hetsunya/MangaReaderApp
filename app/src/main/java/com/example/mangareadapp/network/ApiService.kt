@@ -6,6 +6,9 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 import com.example.mangareadapp.models.MangaResponse
+import okhttp3.*
+import java.io.IOException
+
 
 interface ApiService {
     @GET("/search")
