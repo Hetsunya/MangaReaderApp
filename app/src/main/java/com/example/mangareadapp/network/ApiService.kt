@@ -2,6 +2,7 @@ package com.example.mangareadapp.network
 
 import com.example.mangareadapp.models.Chapter
 import com.example.mangareadapp.models.MangaDetailResponse
+import com.example.mangareadapp.models.ImageResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -21,5 +22,5 @@ interface ApiService {
     fun getChapters(@Query("url") url : String): Call<List<Chapter>>
 
     @GET("/extract/images")
-    fun getImages(@Query("url") url: String): Call<List<String>>
+    fun getImages(@Query("url") url: String): Call<List<ImageResponse>>
 }

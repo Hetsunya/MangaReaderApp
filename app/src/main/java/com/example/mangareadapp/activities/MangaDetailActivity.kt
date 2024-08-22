@@ -20,6 +20,7 @@ import android.util.Log
 import com.example.mangareadapp.R
 import com.example.mangareadapp.network.UrlChecker
 import okhttp3.OkHttpClient
+import com.example.mangareadapp.models.ImageResponse
 
 import com.example.mangareadapp.network.ApiService
 
@@ -135,29 +136,33 @@ class MangaDetailActivity : AppCompatActivity() {
     private fun fetchChapterImages(chapterUrl: String) {
         val apiService = RetrofitInstance.apiService
 
-        // Создаем строку запроса, просто добавляя необходимую часть URL
         val fullUrl = "https://mangapoisk.live$chapterUrl"
 
-        // Отправляем запрос с готовым URL
         val call = apiService.getImages(fullUrl)
 
-        call.enqueue(object : Callback<List<String>> {
-            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
+        call.enqueue(object : Callback<List<ImageResponse>> {
+            override fun onResponse(call: Call<List<ImageResponse>>, response: Response<List<ImageResponse>>) {
                 if (response.isSuccessful) {
                     val images = response.body() ?: emptyList()
                     Log.d("images", images.toString())
-                    // Запуск MangaReaderActivity с передачей списка изображений
-                    val intent = Intent(this@MangaDetailActivity, MangaReaderActivity::class.java)
-                    intent.putStringArrayListExtra("imageUrls", ArrayList(images))
-                    startActivity(intent)
+                    if (images.isNotEmpty()) {
+                        val imageUrls = images.map { it.image_url }
+                        // Переход к активности для отображения изображений
+                        val intent = Intent(this@MangaDetailActivity, MangaReaderActivity::class.java)
+                        intent.putStringArrayListExtra("image_urls", ArrayList(imageUrls))
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this@MangaDetailActivity, "Нет изображений для этой главы", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
                     Toast.makeText(this@MangaDetailActivity, "Ошибка загрузки изображений", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            override fun onFailure(call: Call<List<String>>, t: Throwable) {
+            override fun onFailure(call: Call<List<ImageResponse>>, t: Throwable) {
                 Toast.makeText(this@MangaDetailActivity, "Ошибка загрузки изображений", Toast.LENGTH_SHORT).show()
             }
         })
     }
+
 }
