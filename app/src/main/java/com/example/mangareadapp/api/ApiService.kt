@@ -14,4 +14,7 @@ interface ApiService {
 
     @GET("/scrap/chapters")
     fun getChapters(@Query("url") url : String): Call<List<Chapter>>
+
+    @GET("/extract/images")
+    fun getImages(@Query("url") url: String): Call<List<String>>
 }

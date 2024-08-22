@@ -107,11 +107,39 @@ class MangaDetailActivity : AppCompatActivity() {
             val button = Button(this)
             button.text = "${chapter.title} - ${chapter.date}"
             button.setOnClickListener {
-                // Заглушка для обработки нажатия на главу
-                Toast.makeText(this, "Clicked on ${chapter.title}", Toast.LENGTH_SHORT).show()
-                // Здесь можно добавить логику перехода на страницу с изображениями главы
+                fetchChapterImages(chapter.link)
             }
             chaptersList.addView(button)
         }
     }
+
+// TODO: РАБОТАЕТ, НО НЕТ ЧИТАЛКИ XDDDDDD
+    private fun fetchChapterImages(chapterUrl: String) {
+        val apiService = RetrofitInstance.apiService
+
+        // Создаем строку запроса, просто добавляя необходимую часть URL
+        val fullUrl = "https://mangapoisk.live$chapterUrl"
+
+        // Отправляем запрос с готовым URL
+        val call = apiService.getImages(fullUrl)
+
+        call.enqueue(object : Callback<List<String>> {
+            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
+                if (response.isSuccessful) {
+                    val images = response.body() ?: emptyList()
+                    // Обработка изображений
+                    Toast.makeText(this@MangaDetailActivity, "Изображения загружены", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@MangaDetailActivity, "Ошибка загрузки изображений", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<String>>, t: Throwable) {
+                Toast.makeText(this@MangaDetailActivity, "Ошибка загрузки изображений", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
+
 }
