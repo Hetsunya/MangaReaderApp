@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mangareadapp.api.Chapter
+import com.example.mangareadapp.models.Chapter
 
 class ChapterAdapter : RecyclerView.Adapter<ChapterAdapter.ChapterViewHolder>() {
 

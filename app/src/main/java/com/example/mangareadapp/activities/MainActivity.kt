@@ -1,4 +1,4 @@
-package com.example.mangareadapp
+package com.example.mangareadapp.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +8,9 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mangareadapp.api.ApiService
-import com.example.mangareadapp.api.Manga
-import com.example.mangareadapp.api.MangaResponse
+import com.example.mangareadapp.R
+import com.example.mangareadapp.network.ApiService
+import com.example.mangareadapp.models.MangaResponse
 import com.example.mangareadapp.network.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback

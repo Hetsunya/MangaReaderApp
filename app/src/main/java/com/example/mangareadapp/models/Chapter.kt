@@ -1,7 +1,4 @@
-package com.example.mangareadapp.api
-
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+package com.example.mangareadapp.models
 
 data class Chapter(
     val title: String,

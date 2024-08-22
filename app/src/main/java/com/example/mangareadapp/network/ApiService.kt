@@ -1,9 +1,11 @@
-package com.example.mangareadapp.api
+package com.example.mangareadapp.network
 
+import com.example.mangareadapp.models.Chapter
+import com.example.mangareadapp.models.MangaDetailResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
-import com.example.mangareadapp.api.MangaResponse
+import com.example.mangareadapp.models.MangaResponse
 
 interface ApiService {
     @GET("/search")

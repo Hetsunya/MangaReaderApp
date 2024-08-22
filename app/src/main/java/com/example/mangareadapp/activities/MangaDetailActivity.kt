@@ -1,4 +1,4 @@
-package com.example.mangareadapp
+package com.example.mangareadapp.activities
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -8,13 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
-import com.example.mangareadapp.api.Chapter
-import com.example.mangareadapp.api.MangaDetailResponse
+import com.example.mangareadapp.models.Chapter
+import com.example.mangareadapp.models.MangaDetailResponse
 import android.widget.Button
 import android.widget.LinearLayout
 import com.example.mangareadapp.network.RetrofitInstance
 import android.widget.Toast
 import android.net.Uri
+import com.example.mangareadapp.R
 
 
 class MangaDetailActivity : AppCompatActivity() {

@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mangareadapp.activities.MangaDetailActivity
 import com.squareup.picasso.Picasso
-import com.example.mangareadapp.api.Manga
+import com.example.mangareadapp.models.Manga
 
 class MangaAdapter(private val mangas: List<Manga>) : RecyclerView.Adapter<MangaAdapter.MangaViewHolder>() {
 

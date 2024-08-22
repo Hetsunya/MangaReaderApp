@@ -1,4 +1,4 @@
-package com.example.mangareadapp
+package com.example.mangareadapp.activities
 
 import android.os.Bundle
 import android.util.Log
@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mangareadapp.api.ApiService
-import com.example.mangareadapp.api.Chapter
+import com.example.mangareadapp.ChapterAdapter
+import com.example.mangareadapp.R
+import com.example.mangareadapp.network.ApiService
+import com.example.mangareadapp.models.Chapter
 import com.example.mangareadapp.network.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback

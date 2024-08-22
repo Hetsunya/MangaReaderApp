@@ -1,4 +1,4 @@
-package com.example.mangareadapp.api
+package com.example.mangareadapp.models
 
 import android.os.Parcel
 import android.os.Parcelable

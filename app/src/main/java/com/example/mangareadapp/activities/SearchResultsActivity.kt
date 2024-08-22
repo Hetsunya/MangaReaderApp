@@ -1,11 +1,13 @@
-package com.example.mangareadapp
+package com.example.mangareadapp.activities
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mangareadapp.api.Manga
+import com.example.mangareadapp.MangaAdapter
+import com.example.mangareadapp.R
+import com.example.mangareadapp.models.Manga
 
 class SearchResultsActivity : AppCompatActivity() {
 
