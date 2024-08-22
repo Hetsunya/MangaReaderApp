@@ -10,4 +10,8 @@
 
     <!-- Для activity_chapter_list.xml -->
     <string name="chapters_list_title">Chapters List</string>
+
+    <!-- Строковый ресурс для отображения прогресса чтения главы -->
+    <string name="progress_text">%d/%d</string>
+
 </resources>

@@ -27,6 +27,8 @@
         <activity android:name=".activities.SearchResultsActivity"></activity>
         <activity android:name=".activities.MangaDetailActivity"></activity>
         <activity android:name=".activities.ChapterListActivity" />
+        <activity android:name=".activities.MangaReaderActivity" />
+
 
     </application>
 </manifest>

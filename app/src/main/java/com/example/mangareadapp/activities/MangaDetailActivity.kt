@@ -3,6 +3,7 @@ package com.example.mangareadapp.activities
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -131,7 +132,6 @@ class MangaDetailActivity : AppCompatActivity() {
         }
     }
 
-// TODO: РАБОТАЕТ, НО НЕТ ЧИТАЛКИ XDDDDDD
     private fun fetchChapterImages(chapterUrl: String) {
         val apiService = RetrofitInstance.apiService
 
@@ -145,8 +145,11 @@ class MangaDetailActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
                 if (response.isSuccessful) {
                     val images = response.body() ?: emptyList()
-                    // Обработка изображений
-                    Toast.makeText(this@MangaDetailActivity, "Изображения загружены", Toast.LENGTH_SHORT).show()
+                    Log.d("images", images.toString())
+                    // Запуск MangaReaderActivity с передачей списка изображений
+                    val intent = Intent(this@MangaDetailActivity, MangaReaderActivity::class.java)
+                    intent.putStringArrayListExtra("imageUrls", ArrayList(images))
+                    startActivity(intent)
                 } else {
                     Toast.makeText(this@MangaDetailActivity, "Ошибка загрузки изображений", Toast.LENGTH_SHORT).show()
                 }
@@ -157,7 +160,4 @@ class MangaDetailActivity : AppCompatActivity() {
             }
         })
     }
-
-
-
 }
