@@ -14,7 +14,7 @@ class UrlChecker(private val client: OkHttpClient) {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 // Если запрос не удался, пробуем альтернативный домен
-                val newUrl = url.replace("mangapoisk.live", "m2.yaoipoisk.net")
+                val newUrl = url.replace("mangapoisk.live", "m3.yaoipoisk.net")
                 callback(newUrl) // Передаем новый URL в callback
             }
 
@@ -24,7 +24,7 @@ class UrlChecker(private val client: OkHttpClient) {
                     callback(url)
                 } else {
                     // Если запрос не успешен, пробуем альтернативный домен
-                    val newUrl = url.replace("mangapoisk.live", "m2.yaoipoisk.net")
+                    val newUrl = url.replace("mangapoisk.live", "m3.yaoipoisk.net")
                     callback(newUrl)
                 }
             }

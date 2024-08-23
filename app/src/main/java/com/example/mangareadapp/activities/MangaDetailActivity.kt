@@ -58,7 +58,11 @@ class MangaDetailActivity : AppCompatActivity() {
 
             // Обработчик нажатия на кнопку "View Chapters"
             chaptersButton.setOnClickListener {
-                fetchChapters(finalUrl, chaptersList)
+                Log.d("finalManga в клике до", mangaUrl)
+                urlChecker.checkAndGetFinalUrl(mangaUrl) { finalUrl ->
+                    Log.d("finalManga в клике аполся", mangaUrl)
+                    fetchChapters(finalUrl, chaptersList)
+                }
             }
         }
     }
