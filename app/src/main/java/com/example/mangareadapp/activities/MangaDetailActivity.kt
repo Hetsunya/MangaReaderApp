@@ -50,22 +50,22 @@ class MangaDetailActivity : AppCompatActivity() {
         val apiService = RetrofitInstance.apiService
         val urlChecker = UrlChecker(OkHttpClient())
         Log.d("finalManga", mangaUrl)
-        // Проверка и получение правильного URL перед запросом
-        urlChecker.checkAndGetFinalUrl(mangaUrl) { finalUrl ->
-            Log.d("finalManga", finalUrl)
-            // Загрузка деталей манги
-            fetchMangaDetails(finalUrl, imageView, titleView, genreView, descriptionView, statusView, yearView, numberOfChaptersView)
 
-            // Обработчик нажатия на кнопку "View Chapters"
-            chaptersButton.setOnClickListener {
-                Log.d("finalManga в клике до", mangaUrl)
-                urlChecker.checkAndGetFinalUrl(mangaUrl) { finalUrl ->
-                    Log.d("finalManga в клике аполся", mangaUrl)
-                    fetchChapters(finalUrl, chaptersList)
-                }
+        // Загрузка деталей манги без проверки URL (здесь она не нужна)
+        fetchMangaDetails(mangaUrl, imageView, titleView, genreView, descriptionView, statusView, yearView, numberOfChaptersView)
+
+        // Обработчик нажатия на кнопку "View Chapters"
+        chaptersButton.setOnClickListener {
+            Log.d("finalManga в клике до", mangaUrl)
+
+            // Проверка и получение правильного URL перед запросом глав
+            urlChecker.checkAndGetFinalUrl(mangaUrl, "http://10.0.2.2:8080/scrap/chapters?url=") { finalUrl ->
+                Log.d("finalManga в клике после", finalUrl)
+                fetchChapters(finalUrl, chaptersList)  // Используем проверенный URL для запроса глав
             }
         }
     }
+
 
     private fun fetchMangaDetails(mangaUrl: String, imageView: ImageView, titleView: TextView,
                                   genreView: TextView, descriptionView: TextView, statusView: TextView,
