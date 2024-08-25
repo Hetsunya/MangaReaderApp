@@ -20,35 +20,66 @@
 
         <TextView
             android:id="@+id/statusView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="194dp"
+            android:layout_height="60dp"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/imageView"
-            app:layout_constraintWidth_percent="0.5"
-            app:layout_constraintHeight_default="wrap" />
-
-        <TextView
-            android:id="@+id/yearView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/statusView"
+            app:layout_constraintHeight_default="wrap"
             app:layout_constraintStart_toEndOf="@id/imageView"
-            app:layout_constraintWidth_percent="0.25"
-            app:layout_constraintEnd_toStartOf="@id/numberOfChaptersView" />
+            app:layout_constraintTop_toTopOf="@id/imageView"
+            app:layout_constraintWidth_percent="0.5" />
 
-        <TextView
-            android:id="@+id/numberOfChaptersView"
-            android:layout_width="0dp"
+        <!-- LinearLayout для yearView и подписи "Год" с обводкой -->
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_border"
+            app:layout_constraintEnd_toStartOf="@id/numberOfChaptersView"
+            app:layout_constraintStart_toEndOf="@id/imageView"
             app:layout_constraintTop_toBottomOf="@id/statusView"
+            app:layout_constraintWidth_percent="0.25">
+
+            <TextView
+                android:id="@+id/yearView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Год"
+                android:textSize="12sp"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <!-- LinearLayout для numberOfChaptersView и подписи "Глав" с обводкой -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/yearView"
-            app:layout_constraintWidth_percent="0.25" />
+            app:layout_constraintTop_toBottomOf="@id/statusView"
+            app:layout_constraintWidth_percent="0.25">
+
+            <TextView
+                android:id="@+id/numberOfChaptersView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Глав"
+                android:textSize="12sp"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/titleView"
@@ -83,7 +114,7 @@
             android:id="@+id/chaptersButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="View Chapters"
+            android:text="Главы"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/descriptionView"
