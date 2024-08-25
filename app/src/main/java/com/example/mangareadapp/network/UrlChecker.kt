@@ -4,6 +4,7 @@ import android.util.Log
 import okhttp3.*
 import java.io.IOException
 
+//TODO: ЭТО ВСЁ НУЖНО СДЕЛАТЬ КАК ЧЕЛОВЕК А ТЫ ЕБЛАН ТУПОЙ НАХУЙ 
 class UrlChecker(private val client: OkHttpClient) {
 
     fun checkAndGetFinalUrl(url: String, endpoint: String, callback: (String) -> Unit) {
