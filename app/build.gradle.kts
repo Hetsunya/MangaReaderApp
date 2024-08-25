@@ -54,6 +54,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.squareup.picasso:picasso:2.71828")
+    implementation ("androidx.core:core-ktx:1.10.0")
 
     kapt("com.github.bumptech.glide:compiler:4.15.1")
 }

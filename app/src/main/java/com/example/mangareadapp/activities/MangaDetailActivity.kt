@@ -21,6 +21,13 @@ import com.example.mangareadapp.R
 import com.example.mangareadapp.network.UrlChecker
 import okhttp3.OkHttpClient
 import com.example.mangareadapp.models.ImageResponse
+import androidx.constraintlayout.helper.widget.Flow
+import androidx.core.content.ContextCompat
+import android.graphics.Color
+import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
+import android.view.ViewGroup
+
 
 import com.example.mangareadapp.network.ApiService
 
@@ -36,7 +43,9 @@ class MangaDetailActivity : AppCompatActivity() {
 
         val imageView = findViewById<ImageView>(R.id.imageView)
         val titleView = findViewById<TextView>(R.id.titleView)
-        val genreView = findViewById<TextView>(R.id.genreView)
+//        val genreView = findViewById<TextView>(R.id.genreView)
+//        val genreContainer = findViewById<ConstraintLayout>(R.id.genreContainer) // Инициализация контейнера
+        val genreFlow = findViewById<androidx.constraintlayout.helper.widget.Flow>(R.id.genreFlow) // Инициализация Flow
         val descriptionView = findViewById<TextView>(R.id.descriptionView)
         val statusView = findViewById<TextView>(R.id.statusView)
         val yearView = findViewById<TextView>(R.id.yearView)
@@ -52,7 +61,7 @@ class MangaDetailActivity : AppCompatActivity() {
         Log.d("finalManga", mangaUrl)
 
         // Загрузка деталей манги без проверки URL (здесь она не нужна)
-        fetchMangaDetails(mangaUrl, imageView, titleView, genreView, descriptionView, statusView, yearView, numberOfChaptersView)
+        fetchMangaDetails(mangaUrl, imageView, titleView,genreFlow, descriptionView, statusView, yearView, numberOfChaptersView)
 
         // Обработчик нажатия на кнопку "View Chapters"
         chaptersButton.setOnClickListener {
@@ -66,21 +75,59 @@ class MangaDetailActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun fetchMangaDetails(mangaUrl: String, imageView: ImageView, titleView: TextView,
-                                  genreView: TextView, descriptionView: TextView, statusView: TextView,
-                                  yearView: TextView, numberOfChaptersView: TextView) {
+    private fun fetchMangaDetails(
+        mangaUrl: String,
+        imageView: ImageView,
+        titleView: TextView,
+        genreFlow: Flow,
+        descriptionView: TextView,
+        statusView: TextView,
+        yearView: TextView,
+        numberOfChaptersView: TextView
+    ) {
         val apiService = RetrofitInstance.apiService
         val call = apiService.getMangaDetails(mangaUrl)
 
         call.enqueue(object : Callback<MangaDetailResponse> {
-            override fun onResponse(call: Call<MangaDetailResponse>, response: Response<MangaDetailResponse>) {
+            override fun onResponse(
+                call: Call<MangaDetailResponse>,
+                response: Response<MangaDetailResponse>
+            ) {
                 if (response.isSuccessful) {
                     val mangaDetail = response.body()
                     if (mangaDetail != null) {
+                        // Загружаем изображение манги
                         Picasso.get().load(mangaDetail.imageUrl).into(imageView)
+
+                        // Устанавливаем название манги
                         titleView.text = mangaDetail.titles[0]
-                        genreView.text = mangaDetail.genres.joinToString(separator = ", ")
+
+                        // Добавляем новые жанры
+                        val genreIds = mutableListOf<Int>()
+
+                        for (genre in mangaDetail.genres) {
+                            val genreTextView = TextView(this@MangaDetailActivity).apply {
+                                text = genre
+                                id = View.generateViewId() // Генерация уникального ID для Flow
+                                setPadding(8, 4, 8, 4)  // Увеличенные отступы
+                                background = ContextCompat.getDrawable(this@MangaDetailActivity, R.drawable.rounded_border)
+                                setTextColor(Color.BLACK)
+                                layoutParams = ViewGroup.MarginLayoutParams(
+                                    ViewGroup.MarginLayoutParams.WRAP_CONTENT,
+                                    ViewGroup.MarginLayoutParams.WRAP_CONTENT
+                                ).apply {
+//                                    setMargins(8, 8, 8, 8) // Отступы между элементами
+                                }
+                            }
+                            // Добавляем TextView в родительский ConstraintLayout
+                            findViewById<ConstraintLayout>(R.id.myConstraintLayout).addView(genreTextView)
+                            genreIds.add(genreTextView.id) // Добавляем ID жанра в список
+                        }
+
+                        // Установка видимости и ID для Flow
+                        genreFlow.referencedIds = genreIds.toIntArray()
+
+                        // Устанавливаем оставшиеся данные
                         statusView.text = mangaDetail.status
                         yearView.text = mangaDetail.year
                         numberOfChaptersView.text = mangaDetail.numberOfChapters
@@ -94,6 +141,11 @@ class MangaDetailActivity : AppCompatActivity() {
             }
         })
     }
+
+
+
+
+
 
     private fun fetchChapters(mangaUrl: String, chaptersList: LinearLayout) {
         val apiService = RetrofitInstance.apiService
