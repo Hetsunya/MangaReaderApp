@@ -75,6 +75,8 @@ class MangaDetailActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun fetchMangaDetails(
         mangaUrl: String,
         imageView: ImageView,
@@ -100,6 +102,7 @@ class MangaDetailActivity : AppCompatActivity() {
                         Picasso.get().load(mangaDetail.imageUrl).into(imageView)
 
                         // Устанавливаем название манги
+                        Log.d("названия", mangaDetail.titles.toString())
                         titleView.text = mangaDetail.titles[0]
 
                         // Добавляем новые жанры
